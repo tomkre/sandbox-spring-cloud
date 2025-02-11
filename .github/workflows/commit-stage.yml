@@ -42,7 +42,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-22.04
     env:
-      FULL_IMAGE_NAME: "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+      FULL_IMAGE_NAME: "$REGISTRY/$IMAGE_NAME:$VERSION"
     permissions:
       contents: read
       packages: write
