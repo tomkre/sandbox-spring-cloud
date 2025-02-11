@@ -4,6 +4,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: tomkre/sandbox-spring-cloud
   VERSION: LATEST
+  FULL_IMAGE_NAME: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}'
 jobs:
   build:
     name: Build and Test
@@ -38,7 +39,7 @@ jobs:
           sarif_file: ${{ steps.scan.outputs.sarif }}
   package:
     name: Package and Publish
-    if: ${{ github.ref == 'refs/heads/main' }}'
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [build]
     runs-on: ubuntu-22.04
     permissions:
@@ -77,4 +78,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish container image
-        run: docker image push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        run: |
+          echo 'Pushing ${{ env.FULL_IMAGE_NAME }} to registry'
+          docker image push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
