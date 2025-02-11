@@ -4,7 +4,6 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: tomkre/sandbox-spring-cloud
   VERSION: LATEST
-  FULL_IMAGE_NAME: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}'
 jobs:
   build:
     name: Build and Test
@@ -42,6 +41,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs: [build]
     runs-on: ubuntu-22.04
+    env:
+      FULL_IMAGE_NAME: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}'
     permissions:
       contents: read
       packages: write
