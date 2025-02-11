@@ -1,21 +1,3 @@
-server:
-  tomcat:
-    keep-alive-timeout: 9s
-    mbeanregistry:
-      enabled: true
-    threads:
-      max: 18
-      min-spare: 9
-spring:
-  jmx:
-    enabled: true
-  application:
-    name: master-service
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
 logging:
   pattern:
     console: '%d{HH:mm:ss.SSS} %level [%thread] %-36.36logger: %msg%n'

@@ -20,9 +20,6 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	testImplementation("org.springframework.boot:spring-boot-starter-webflux")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2023.0.3"))
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -31,4 +28,23 @@ dependencies {
 
 tasks.named<Test>("test") {
 	useJUnitPlatform()
+}
+
+tasks.register<Exec>("buildDockerImage") {
+	group = "docker"
+	dependsOn("build")
+	commandLine("sh", "-c", """
+		docker image build -t tomkre/sbs-app:1.0 .
+	""".trimIndent())
+}
+
+tasks.bootBuildImage {
+	imageName = "tomkre/sbs-app:1.0"
+	docker {
+		publishRegistry {
+			username.set(findProperty("registryUsername").toString())
+			password.set(findProperty("registryPassword").toString())
+			url.set(findProperty("registryUrl").toString())
+		}
+	}
 }
