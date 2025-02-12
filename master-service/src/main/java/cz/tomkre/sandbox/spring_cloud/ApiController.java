@@ -13,7 +13,7 @@ public class ApiController {
     @GetMapping("info")
     public Map<String, ?> info() {
         return Map.of(
-            "message", "Tom is great!"
+            "message", "Tom is great v2!"
         );
     }
 

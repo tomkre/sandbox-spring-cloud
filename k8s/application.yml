@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbs-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sbs
+  template:
+    metadata:
+      name: sbs-pod
+      labels:
+        app: sbs
+    spec:
+      containers:
+        - name: sbs
+          image: tomkre/sbs-app:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 3"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sbs-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: sbs
+  ports:
+    - port: 8080
+      targetPort: 8080
