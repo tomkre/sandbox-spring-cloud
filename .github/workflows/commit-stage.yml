@@ -36,8 +36,12 @@ jobs:
 #        if: success() || failure()
 #        with:
 #          sarif_file: ${{ steps.scan.outputs.sarif }}
-      - name: Validate Kubernetes manifests
+      - name: Setup kube tools
         uses: yokawasa/action-setup-kube-tools@v0.11.2
+        with:
+          kubeconform: 0.6.3
+          setup-tools: kubeconform
+      - name: Validate Kubernetes manifests
         run: |
           kubeconform -summary k8s/application.yml
   package:
