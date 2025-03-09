@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mas-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mas
+  template:
+    metadata:
+      labels:
+        app: mas
+    spec:
+      containers:
+        - name: mas
+#          image: tomkre/sbs-master-service:1.0
+          image: master-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9001
+          volumeMounts:
+            - mountPath: /workspace/config
+              name: mas-vol
+      volumes:
+        - name: mas-vol
+          configMap:
+            name: mas-cfg

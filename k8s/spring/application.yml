@@ -1,0 +1,3 @@
+app:
+  name: master [kustomize]
+  env: minikube,kustomize1
