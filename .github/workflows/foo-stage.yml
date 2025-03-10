@@ -4,6 +4,7 @@ on:
     workflows: ['Commit Stage']
     types: [completed]
     branches: [master]
+concurrency: acceptance
 jobs:
   build:
     name: Foo build

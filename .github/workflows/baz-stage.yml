@@ -4,6 +4,7 @@ on:
     workflows: ['Commit Stage']
     types: [completed]
     branches: [main]
+concurrency: acceptance
 jobs:
   build:
     name: Baz build
