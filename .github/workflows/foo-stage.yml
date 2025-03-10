@@ -1,0 +1,15 @@
+name: Foo Stage
+on:
+  workflow_run:
+    workflows: ['Commit Stage']
+    types: [completed]
+    branches: [master]
+jobs:
+  build:
+    name: Foo build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Main foo step
+        run: |
+          echo 'Running foo workflow'
+              

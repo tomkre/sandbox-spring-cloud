@@ -10,9 +10,11 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - name: Get sha
+      - name: Main commit step
         run: |
-          echo 'github.sha=${{ env.VERSION }}'
+          echo 'Running main workflow - start'
+          sleep 9
+          echo 'Running main workflow - end'
 #      - name: Checkout source code
 #        uses: actions/checkout@v4
 #      - name: Set up JDK

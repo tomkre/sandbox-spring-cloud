@@ -1,0 +1,15 @@
+name: Bar Stage
+on:
+  workflow_run:
+    workflows: ['Commit Stage']
+    types: [completed]
+    branches: [master]
+jobs:
+  build:
+    name: Bar build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Main bar step
+        run: |
+          echo 'Running bar workflow'
+              

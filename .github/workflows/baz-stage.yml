@@ -1,0 +1,15 @@
+name: Baz Stage
+on:
+  workflow_run:
+    workflows: ['Commit Stage']
+    types: [completed]
+    branches: [main]
+jobs:
+  build:
+    name: Baz build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Main baz step
+        run: |
+          echo 'Running baz workflow'
+              
