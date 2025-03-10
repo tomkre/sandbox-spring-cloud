@@ -4,13 +4,28 @@ on:
     workflows: ['Commit Stage']
     types: [completed]
     branches: [master]
-concurrency: acceptance
 jobs:
-  build:
-    name: Foo build
+  job_one:
+    name: Job one
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-22.04
     steps:
-      - name: Main foo step
+      - name: Job one step
         run: |
-          echo 'Running foo workflow'
-              
+          echo 'Running job one step'
+  job_two:
+    name: Job two
+    if: ${{ github.event.workflow_run.conclusion != 'success' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Job two step
+        run: |
+          echo 'Running job two step'
+  job_three:
+    name: Job three
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Job three step
+        run: |
+          echo 'Running job three step'              
