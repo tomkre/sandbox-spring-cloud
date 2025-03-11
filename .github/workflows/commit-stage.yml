@@ -1,43 +1,18 @@
 name: Commit Stage
 on: push
-env:
-  VERSION: ${{ github.sha }}
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      security-events: write
     steps:
-      - name: Main commit step
-        run: |
-          echo 'Running main workflow - start'
-          sleep 9
-          echo 'Running main workflow - end'
-#      - name: Checkout source code
-#        uses: actions/checkout@v4
-#      - name: Set up JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: temurin
-#          java-version: 21
-#          cache: gradle
-#      - name: Build, unit and integration tests
-#        run: |
-#          chmod +x gradlew
-#          ./gradlew build
-#      - name: Setup kube tools
-#        uses: yokawasa/action-setup-kube-tools@v0.11.2
-#        with:
-#          setup-tools: |
-#            kubectl
-#            kubeconform
-#            kustomize
-#          kubectl: v1.23.2
-#          kustomize: v5.5.0
-#          kubeconform: v0.6.7
-#      - name: Validate kubernetes manifests
-#        run: |
-#          kustomize build k8s | kubeconform -strict -summary
+      - name: Payload dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+          repository: tomkre/sbs-cloud-deployment
+          event-type: app_delivery
+          client-payload: '{
+            "app_name": "github-service",
+            "app_version": "1.0.0"
+          }'
               
