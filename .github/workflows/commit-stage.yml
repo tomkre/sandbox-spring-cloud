@@ -9,7 +9,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.DISPATCH_TOKEN }}
-          repository: tomkre/sbs-cloud-deployment
+          repository: tomkre/sandbox-github-deployment
           event-type: app_delivery
           client-payload: '{
             "app_name": "github-service",
