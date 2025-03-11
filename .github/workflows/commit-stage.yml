@@ -1,19 +1,34 @@
 name: Commit Stage
 on: push
 jobs:
-  build:
-    name: Build and Test
+  job_one:
+    name: job_one
     runs-on: ubuntu-22.04
     steps:
-      - name: Payload dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
-          repository: tomkre/sandbox-github-deployment
-          event-type: app_delivery
-          client-payload: '{
-            "app_name": "github-service",
-            "app_version": "1.5.0",
-            "app_author": "tom"
-          }'
-              
+      - name: job_one step
+        run: |
+          sleep 9
+          echo 'Running job_one'
+  job_two:
+    name: job_two
+    runs-on: ubuntu-22.04
+    steps:
+      - name: job_two step
+        run: |
+          sleep 9
+          echo 'Running job_two'
+  job_three:
+    name: job_three
+    runs-on: ubuntu-22.04
+    steps:
+      - name: job_three step
+        run: |
+          sleep 9
+          echo 'Running job_three'
+  job_four:
+    name: job_four
+    runs-on: ubuntu-22.04
+    needs: [job_one, job_two]
+    steps:
+      - name: job_four step
+        run: echo 'Running job_four'
