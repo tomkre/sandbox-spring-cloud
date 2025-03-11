@@ -13,7 +13,7 @@ jobs:
           event-type: app_delivery
           client-payload: '{
             "app_name": "github-service",
-            "app_version": "1.3.0",
+            "app_version": "1.4.0",
             "app_author": "tom"
           }'
               
