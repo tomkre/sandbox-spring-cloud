@@ -1,34 +1,26 @@
 name: Commit Stage
 on: push
 jobs:
-  job_one:
-    name: job_one
+  native:
+    name: Build and test (native)
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     steps:
-      - name: job_one step
+      - name: Checkou source code
+        uses: action/checkout@v4
+      - name: Set up GraalVM
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: 21
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build, unit tests and integration tests (native)
         run: |
-          sleep 9
-          echo 'Running job_one'
-  job_two:
-    name: job_two
-    runs-on: ubuntu-22.04
-    steps:
-      - name: job_two step
+          chmod +x gradlew
+          ./gradlew nativeBuild
+      - name: Check contents
         run: |
-          sleep 9
-          echo 'Running job_two'
-  job_three:
-    name: job_three
-    runs-on: ubuntu-22.04
-    steps:
-      - name: job_three step
-        run: |
-          sleep 9
-          echo 'Running job_three'
-  job_four:
-    name: job_four
-    runs-on: ubuntu-22.04
-    needs: [job_one, job_two]
-    steps:
-      - name: job_four step
-        run: echo 'Running job_four'
+          ls build/native
+          ls build/native/nativeCompile
+
